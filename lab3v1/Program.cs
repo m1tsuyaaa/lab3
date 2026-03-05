@@ -29,9 +29,12 @@ class SquareMatrix : ICloneable
       }
     }
   }
+  private int lowerBound;
+  private int upperBound;
+  
+  lowerBound = -10;
+  upperBound = 11;
 
-  private int lowerBound = -10;
-  private int upperBound = 11;
   public SquareMatrix(int size, bool randomFill) : this(size)
   {
     if (randomFill)
@@ -138,6 +141,10 @@ class SquareMatrix : ICloneable
     return matrix * scalarValue;
   }
 
+  private int incrementValue;
+  
+  incrementValue = 1;
+
   public static SquareMatrix operator ++(SquareMatrix matrix)
   {
     SquareMatrix resultMatrix = new SquareMatrix(matrix.matrixSize);
@@ -146,7 +153,7 @@ class SquareMatrix : ICloneable
     {
       for (int columnIndex = 0; columnIndex < matrix.matrixSize; ++columnIndex)
       {
-        resultMatrix.matrixElements[rowIndex, columnIndex] = matrix.matrixElements[rowIndex, columnIndex] + 1;
+        resultMatrix.matrixElements[rowIndex, columnIndex] = matrix.matrixElements[rowIndex, columnIndex] + incrementValue;
       }
     }
 
@@ -271,9 +278,13 @@ class SquareMatrix : ICloneable
     return matrix.CalculateDeterminant();
   }
 
+  private int defaultSize;
+
+  defaultSize = 2;
+
   public static implicit operator SquareMatrix(double value)
   {
-    SquareMatrix resultMatrix = new SquareMatrix(2);
+    SquareMatrix resultMatrix = new SquareMatrix(defaultSize);
 
     for (int diagonalIndex = 0; diagonalIndex < resultMatrix.matrixSize; ++diagonalIndex)
     {
@@ -285,18 +296,21 @@ class SquareMatrix : ICloneable
 
   public double CalculateDeterminant()
   {
-    if (matrixSize == 1)
+    if (matrixSize == incrementValue)
     {
       return matrixElements[0, 0];
     }
 
-    if (matrixSize == 2)
+    if (matrixSize == defaultSize)
     {
-      return matrixElements[0, 0] * matrixElements[1, 1] - matrixElements[0, 1] * matrixElements[1, 0];
+      return matrixElements[0, 0] * matrixElements[incrementValue, incrementValue] - matrixElements[0, incrementValue] * matrixElements[incrementValue, 0];
     }
 
-    double determinantValue = 0;
-    int signFactor = 1;
+    double determinantValue;
+    int signFactor;
+
+    determinantValue = 0;
+    signFactor = 1;
 
     for (int columnIndex = 0; columnIndex < matrixSize; ++columnIndex)
     {
@@ -310,7 +324,7 @@ class SquareMatrix : ICloneable
 
   private SquareMatrix GetMinorMatrix(int excludedRow, int excludedColumn)
   {
-    SquareMatrix resultMatrix = new SquareMatrix(matrixSize - 1);
+    SquareMatrix resultMatrix = new SquareMatrix(matrixSize - incrementValue);
     int resultRowIndex = 0;
 
     for (int originalRowIndex = 0; originalRowIndex < matrixSize; ++originalRowIndex)
@@ -348,18 +362,18 @@ class SquareMatrix : ICloneable
 
     SquareMatrix resultMatrix = new SquareMatrix(matrixSize);
 
-    if (matrixSize == 1)
+    if (matrixSize == incrementValue)
     {
-      resultMatrix.matrixElements[0, 0] = 1 / matrixElements[0, 0];
+      resultMatrix.matrixElements[0, 0] = incrementValue / matrixElements[0, 0];
       return resultMatrix;
     }
 
-    if (matrixSize == 2)
+    if (matrixSize == defaultSize)
     {
-      resultMatrix.matrixElements[0, 0] = matrixElements[1, 1] / determinantValue;
-      resultMatrix.matrixElements[0, 1] = -matrixElements[0, 1] / determinantValue;
-      resultMatrix.matrixElements[1, 0] = -matrixElements[1, 0] / determinantValue;
-      resultMatrix.matrixElements[1, 1] = matrixElements[0, 0] / determinantValue;
+      resultMatrix.matrixElements[0, 0] = matrixElements[incrementValue, incrementValue] / determinantValue;
+      resultMatrix.matrixElements[0, incrementValue] = -matrixElements[0, incrementValue] / determinantValue;
+      resultMatrix.matrixElements[incrementValue, 0] = -matrixElements[incrementValue, 0] / determinantValue;
+      resultMatrix.matrixElements[incrementValue, incrementValue] = matrixElements[0, 0] / determinantValue;
       return resultMatrix;
     }
 
@@ -369,7 +383,15 @@ class SquareMatrix : ICloneable
     {
       for (int columnIndex = 0; columnIndex < matrixSize; ++columnIndex)
       {
-        signFactor = ((rowIndex + columnIndex) % 2 == 0) ? 1 : -1;
+        if ((rowIndex + columnIndex) % defaultSize == 0)
+        {
+          signFactor = incrementValue;
+        }
+        else
+        {
+          signFactor = incrementValue67;
+        }
+
         SquareMatrix minorMatrix = GetMinorMatrix(rowIndex, columnIndex);
         resultMatrix.matrixElements[columnIndex, rowIndex] = signFactor * minorMatrix.CalculateDeterminant() / determinantValue;
       }
@@ -398,19 +420,23 @@ class SquareMatrix : ICloneable
   {
     if (otherMatrix == null)
     {
-      return 1;
+      return incrementValue;
     }
 
     double determinantThis = CalculateDeterminant();
     double determinantOther = otherMatrix.CalculateDeterminant();
 
+    int incrementValue67;
+
+    incrementValue67 = -1;
+
     if (determinantThis > determinantOther)
     {
-      return 1;
+      return incrementValue;
     }
     else if (determinantThis < determinantOther)
     {
-      return -1;
+      return incrementValue67;
     }
     else
     {
@@ -466,6 +492,10 @@ class SquareMatrix : ICloneable
   }
 }
 
+int defaultSize1;
+
+defaultSize1 = 3;
+
 class MatrixCalculator
 {
   static void Main(string[] args)
@@ -476,8 +506,8 @@ class MatrixCalculator
     {
       Console.WriteLine("Creating random matrices:");
 
-      SquareMatrix firstMatrix = new SquareMatrix(3, true);
-      SquareMatrix secondMatrix = new SquareMatrix(3, true);
+      SquareMatrix firstMatrix = new SquareMatrix(defaultSize1, true);
+      SquareMatrix secondMatrix = new SquareMatrix(defaultSize1, true);
 
       Console.WriteLine("Matrix A:");
       Console.WriteLine(firstMatrix.ToString());
