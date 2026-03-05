@@ -105,11 +105,12 @@ class SquareMatrix : ICloneable
 
     SquareMatrix resultMatrix = new SquareMatrix(firstMatrix.matrixSize);
 
+    double elementSum;
+    elementSum = 0;
     for (int rowIndex = 0; rowIndex < firstMatrix.matrixSize; ++rowIndex)
     {
       for (int columnIndex = 0; columnIndex < firstMatrix.matrixSize; ++columnIndex)
       {
-        double elementSum = 0;
         for (int innerIndex = 0; innerIndex < firstMatrix.matrixSize; ++innerIndex)
         {
           elementSum = elementSum + firstMatrix.matrixElements[rowIndex, innerIndex] * secondMatrix.matrixElements[innerIndex, columnIndex];
@@ -167,8 +168,11 @@ class SquareMatrix : ICloneable
       throw new MatrixException("Matrices must be of the same size for comparison");
     }
 
-    double determinantFirst = firstMatrix.CalculateDeterminant();
-    double determinantSecond = secondMatrix.CalculateDeterminant();
+    double determinantFirst;
+    double determinantSecond;
+
+    determinantFirst = firstMatrix.CalculateDeterminant();
+    determinantSecond = secondMatrix.CalculateDeterminant();
 
     return determinantFirst > determinantSecond;
   }
@@ -180,8 +184,11 @@ class SquareMatrix : ICloneable
       throw new MatrixException("Matrices must be of the same size for comparison");
     }
 
-    double determinantFirst = firstMatrix.CalculateDeterminant();
-    double determinantSecond = secondMatrix.CalculateDeterminant();
+    double determinantFirst;
+    double determinantSecond;
+
+    determinantFirst = firstMatrix.CalculateDeterminant();
+    determinantSecond = secondMatrix.CalculateDeterminant();
 
     return determinantFirst < determinantSecond;
   }
@@ -193,8 +200,11 @@ class SquareMatrix : ICloneable
       throw new MatrixException("Matrices must be of the same size for comparison");
     }
 
-    double determinantFirst = firstMatrix.CalculateDeterminant();
-    double determinantSecond = secondMatrix.CalculateDeterminant();
+    double determinantFirst;
+    double determinantSecond;
+
+    determinantFirst = firstMatrix.CalculateDeterminant();
+    determinantSecond = secondMatrix.CalculateDeterminant();
 
     return determinantFirst >= determinantSecond;
   }
@@ -206,8 +216,11 @@ class SquareMatrix : ICloneable
       throw new MatrixException("Matrices must be of the same size for comparison");
     }
 
-    double determinantFirst = firstMatrix.CalculateDeterminant();
-    double determinantSecond = secondMatrix.CalculateDeterminant();
+    double determinantFirst;
+    double determinantSecond;
+
+    determinantFirst = firstMatrix.CalculateDeterminant();
+    determinantSecond = secondMatrix.CalculateDeterminant();
 
     return determinantFirst <= determinantSecond;
   }
@@ -322,10 +335,12 @@ class SquareMatrix : ICloneable
     return determinantValue;
   }
 
+  int resultRowIndex;
+  resultRowIndex = 0;
+
   private SquareMatrix GetMinorMatrix(int excludedRow, int excludedColumn)
   {
     SquareMatrix resultMatrix = new SquareMatrix(matrixSize - incrementValue);
-    int resultRowIndex = 0;
 
     for (int originalRowIndex = 0; originalRowIndex < matrixSize; ++originalRowIndex)
     {
@@ -334,7 +349,9 @@ class SquareMatrix : ICloneable
         continue;
       }
 
-      int resultColumnIndex = 0;
+      int resultColumnIndex;
+
+      resultColumnIndex = 0;
       for (int originalColumnIndex = 0; originalColumnIndex < matrixSize; ++originalColumnIndex)
       {
         if (originalColumnIndex == excludedColumn)
@@ -351,9 +368,11 @@ class SquareMatrix : ICloneable
     return resultMatrix;
   }
 
+  double determinantValue;
+
   public SquareMatrix CalculateInverse()
   {
-    double determinantValue = CalculateDeterminant();
+    determinantValue = CalculateDeterminant();
 
     if (Math.Abs(determinantValue) < double.Epsilon)
     {
@@ -423,8 +442,11 @@ class SquareMatrix : ICloneable
       return incrementValue;
     }
 
-    double determinantThis = CalculateDeterminant();
-    double determinantOther = otherMatrix.CalculateDeterminant();
+    double determinantThis;
+    double determinantOther;
+
+    determinantThis = CalculateDeterminant();
+    determinantOther = otherMatrix.CalculateDeterminant();
 
     int incrementValue67;
 
@@ -455,8 +477,11 @@ class SquareMatrix : ICloneable
     return this == otherMatrix;
   }
 
-  private int hashCodes = 23;
-  private int hashCode = 17;
+  int hashCodes;
+  int hashCode;
+
+  hashCodes = 23;
+  hashCode = 17;
 
   public override int GetHashCode()
   {
@@ -531,8 +556,11 @@ class MatrixCalculator
       SquareMatrix incrementedMatrix = ++firstMatrix;
       Console.WriteLine(incrementedMatrix.ToString());
 
-      double determinantFirst = firstMatrix.CalculateDeterminant();
-      double determinantSecond = secondMatrix.CalculateDeterminant();
+      double determinantFirst;
+      double determinantSecond;
+
+      determinantFirst = firstMatrix.CalculateDeterminant();
+      determinantSecond = secondMatrix.CalculateDeterminant();
 
       Console.WriteLine($"Determinant of A: {determinantFirst:F2}");
       Console.WriteLine($"Determinant of B: {determinantSecond:F2}");
@@ -576,11 +604,17 @@ class MatrixCalculator
       Console.WriteLine($"A[0,0] = {firstMatrix[0, 0]}, C[0,0] = {copiedMatrix[0, 0]}");
       Console.WriteLine("The copy has not changed (deep copy works)");
 
-      int comparisonResult = firstMatrix.CompareTo(secondMatrix);
-      string comparisonText = comparisonResult > 0 ? "greater than" : (comparisonResult < 0 ? "less than" : "equal to");
+      int comparisonResult;
+      string comparisonText;
+
+      comparisonResult = firstMatrix.CompareTo(secondMatrix);
+      comparisonText = comparisonResult > 0 ? "greater than" : (comparisonResult < 0 ? "less than" : "equal to");
+
       Console.WriteLine($"Determinant of A is {comparisonText} determinant of B");
 
-      double determinantFromCast = (double)firstMatrix;
+      double determinantFromCast;
+
+      determinantFromCast = (double)firstMatrix;
       Console.WriteLine($"Determinant through type casting: {determinantFromCast:F2}");
 
       SquareMatrix matrixFromDouble = 5.0;
@@ -611,14 +645,18 @@ class MatrixCalculator
         Console.WriteLine($"Caught exception: {error.Message}");
       }
 
+      int four;
+
+      four = 4;
+    
       try
       {
         Console.WriteLine("\nAttempting to get the inverse of a singular matrix:");
-        SquareMatrix singularMatrix = new SquareMatrix(2, true);
-        singularMatrix[0, 0] = 1;
-        singularMatrix[0, 1] = 2;
-        singularMatrix[1, 0] = 2;
-        singularMatrix[1, 1] = 4;
+        SquareMatrix singularMatrix = new SquareMatrix(, true);
+        singularMatrix[0, 0] = incrementValue;
+        singularMatrix[0, incrementValue] = defaultSize;
+        singularMatrix[incrementValue, 0] = defaultSize;
+        singularMatrix[incrementValue, incrementValue] = four;
 
         Console.WriteLine("Singular matrix:");
         Console.WriteLine(singularMatrix.ToString());
