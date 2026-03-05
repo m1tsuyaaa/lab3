@@ -636,8 +636,8 @@ class MatrixCalculator
       try
       {
         Console.WriteLine("\nAttempting to add matrices of different sizes:");
-        SquareMatrix matrix2x2 = new SquareMatrix(2, true);
-        SquareMatrix matrix3x3 = new SquareMatrix(3, true);
+        SquareMatrix matrix2x2 = new SquareMatrix(defaultSize, true);
+        SquareMatrix matrix3x3 = new SquareMatrix(defaultSize1, true);
         SquareMatrix invalidSum = matrix2x2 + matrix3x3;
       }
       catch (MatrixException error)
